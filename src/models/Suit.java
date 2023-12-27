@@ -1,4 +1,4 @@
-package Model;
+package models;
 
 public enum Suit {
     HEARTS("♥️"),
@@ -14,4 +14,5 @@ public enum Suit {
     public String getSymbol() {
         return symbol;
     }
+
 }
