@@ -56,22 +56,8 @@ public class Main {
                 } else {
                     handToPull = hands.get(i + 1);
                 }
-                System.out.println("Player " + hand.getId() + " are pulling card from player " + handToPull.getId());
-                hand.getCards().add(HandService.randomPull(handToPull));
-                isLose = HandService.checkLose(hand);
-
-                System.out.println("Player " + hand.getId() + " hand: ");
-                HandService.displayCards(hand);
-                if (isLose) {
-                    System.out.println("Player " + hand.getId() + " lost");
-                    break;
-                }
-                HandService.removeHandCards(hand);
-                System.out.println("Removed duplicates: ");
-                HandService.displayCards(hand);
-                System.out.println("Player " + handToPull.getId() + " hand: ");
-                HandService.displayCards(handToPull);
-                System.out.println();
+                isLose = getInfo(hand, handToPull);
+                if (isLose) break;
             }
             System.out.println();
         }
@@ -86,5 +72,27 @@ public class Main {
             HandService.displayCards(hand);
         }
         System.out.println();
+    }
+    private static boolean getInfo(Hand handTo , Hand handFrom) {
+        boolean isLose;
+        System.out.println("\nPlayer "  + handTo.getId() + " deck: ");
+        HandService.displayCards(handTo);
+        System.out.println("\nPlayer "  + handFrom.getId() + " deck: ");
+        HandService.displayCards(handFrom);
+        System.out.println("\nPlayer " + handTo.getId() + " is pulling from " + handFrom.getId());
+        handTo.getCards().add(HandService.randomPull(handFrom));
+        System.out.println("\nPlayer "  + handTo.getId() + " deck before removing duplicates: ");
+        isLose = HandService.checkLose(handTo);
+        HandService.displayCards(handTo);
+        System.out.println("\nPlayer "  + handTo.getId() + " deck after removing duplicates: ");
+        HandService.removeHandCards(handTo);
+        HandService.displayCards(handTo);
+        System.out.println("\nPlayer "  + handFrom.getId() + " deck: ");
+        HandService.displayCards(handFrom);
+        System.out.println("\n");
+        if (isLose) {
+            System.out.println("Player " + handTo.getId() + " lost");
+        }
+        return isLose;
     }
 }
